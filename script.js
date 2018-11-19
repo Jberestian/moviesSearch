@@ -1,28 +1,26 @@
 $(document).ready(() => {
-    $('#searchForm').on('submit', (e) => {
-    let searchText = $('#searchText').val();
-    getMovies(searchText);
-e.preventDefault();
+    $('#searchform').on('submit', (e) => {
+    let searchtext = $('#searchtext').val();
+    getmovies(searchtext);
+e.preventdefault();
 });
 });
 
-function getMovies(searchText) {
-    axios.get('https://api.themoviedb.org/3/search/movie?api_key=eed4f1d8aea9e26327c4f8a358313952&query=Jack+Reacher\n'+searchText)
-
-        // axios.get('http://www.omdbapi.com/?i=tt3896198&apikey=480777bb')
+function getmovies(searchtext) {
+        axios.get('https://api.themoviedb.org/3/search/movie?api_key=eed4f1d8aea9e26327c4f8a358313952&query='+searchtext)
         .then((response) => {
             console.log(response);
             let movies = response.data.results;
             let output = '';
             $.each(movies, (index, movie) => {
                 output += `
-                <div class="col-md-3">
-                <div class="well text-centr">
-                <img src="movie.poster_path" alt="poster imgage">
-                <h5>${movie.title}</h5>
-                <a onclick="movieSelected('${movie.id}')" class="btn btn-primary" href="#">Movie Detail</a>
-</div>
-</div>
+           <div class="col-md-3">
+             <div class="well text-centr">
+               <img src=${'https://image.tmdb.org/t/p/w500/'+movie.poster_path}>
+                 <h5>${movie.title}</h5>    
+                   <a onclick="movieselected('${movie.id}')" class="btn btn-primary" href="#">movie detail</a>
+             </div>
+           </div>
                 `;
             });
             $('#movies').html(output)
@@ -32,15 +30,15 @@ function getMovies(searchText) {
     })
 }
 
-function movieSelected(id) {
-    sessionStorage.setItem('movieId', id);
-    window.location = 'index.html';
+function movieselected(id) {
+    sessionstorage.setitem('movieid', id);
+    window.location = 'movie.html';
     return false;
 }
 
-function getMovie() {
-    let movieId = sessionStorage.getItem('movieId');
-    axios.get('https://api.themoviedb.org/3/movie/343611?api_key=eed4f1d8aea9e26327c4f8a358313952\n')
+function getmovie() {
+    let movieid = sessionstorage.getitem('movieid');
+    axios.get('https://api.themoviedb.org/3/find/{external_id}?api_key=eed4f1d8aea9e26327c4f8a358313952&language=en-us&external_source=imdb_id')
         .then((response) => {
        console.log(response);
        let movie = response.data;
@@ -49,18 +47,17 @@ function getMovie() {
        let output = `
        <div class="row">
        <div class="col-md-4">
-       <img src="${movie.poster_path}" alt="poster image" class="thumbnail">
+       <img src=${'https://image.tmdb.org/t/p/w500/'+movie.poster_path} class="thumbnail">
 </div>
 <div class="col-md-8">
 <h2>${movie.title}</h2>
 <ul class="list-group">
-<li list-group-item>Genre: ${movie.genre_ids}</li>
-<li list-group-item>Popularity: ${movie.popularity}</li>
-<li list-group-item>Release Date: ${movie.release_date}</li>
-<li list-group-item>Vote Average: ${movie.vote_average}</li>
-<li list-group-item>Vote Count: ${movie.vote_count}</li>
+<li list-group-item>genre: ${movie.genre_ids}</li>
+<li list-group-item>popularity: ${movie.popularity}</li>
+<li list-group-item>release date: ${movie.release_date}</li>
+<li list-group-item>vote average: ${movie.vote_average}</li>
+<li list-group-item>vote count: ${movie.vote_count}</li>
 </ul>
-
 <h2>${movie.title}</h2>
 </div>
 </div> 
