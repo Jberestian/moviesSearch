@@ -6,7 +6,7 @@ e.preventdefault();
 });
 });
 
-function getmovies(searchtext) {
+function getMovies(searchtext) {
         axios.get('https://api.themoviedb.org/3/search/movie?api_key=eed4f1d8aea9e26327c4f8a358313952&query='+searchtext)
         .then((response) => {
             console.log(response);
@@ -36,7 +36,7 @@ function movieselected(id) {
     return false;
 }
 
-function getmovie() {
+function getMovie() {
     let movieid = sessionstorage.getitem('movieid');
     axios.get('https://api.themoviedb.org/3/find/{external_id}?api_key=eed4f1d8aea9e26327c4f8a358313952&language=en-us&external_source=imdb_id')
         .then((response) => {
